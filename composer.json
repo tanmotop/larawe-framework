@@ -1,0 +1,24 @@
+{
+    "name": "tanmo/wq",
+    "description": "A laravel style we-engine module framework",
+    "type": "framework",
+    "require": {
+        "php": ">=7.0",
+        "illuminate/container": "^5.8"
+    },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Tanmo",
+            "email": "410536770@qq.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Tanmo\\Wq\\": "src/"
+        },
+        "files": [
+            "src/functions.php"
+        ]
+    }
+}
