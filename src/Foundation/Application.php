@@ -11,16 +11,16 @@ namespace Tanmo\Wq\Foundation;
 
 use Closure;
 use RuntimeException;
-use Illuminate\Container\Container;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
-use Symfony\Component\HttpFoundation\Request as SymfonyRequest;
-use Symfony\Component\HttpKernel\HttpKernelInterface;
-use Tanmo\Wq\Routing\RoutingServiceProvider;
-use Illuminate\Contracts\Http\Kernel as HttpKernelContract;
-use Illuminate\Events\EventServiceProvider;
+use Illuminate\Container\Container;
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Events\EventServiceProvider;
+use Tanmo\Wq\Routing\RoutingServiceProvider;
+use Symfony\Component\HttpKernel\HttpKernelInterface;
+use Illuminate\Contracts\Http\Kernel as HttpKernelContract;
+use Symfony\Component\HttpFoundation\Request as SymfonyRequest;
 use Illuminate\Contracts\Foundation\Application as ApplicationContract;
 
 class Application extends Container implements ApplicationContract, HttpKernelInterface
