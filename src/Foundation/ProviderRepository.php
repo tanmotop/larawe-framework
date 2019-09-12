@@ -8,8 +8,31 @@
 
 namespace Tanmo\Wq\Foundation;
 
+use Illuminate\Contracts\Foundation\Application as ApplicationContract;
 
 class ProviderRepository
 {
+    /**
+     * @var ApplicationContract
+     */
+    protected $app;
 
+    /**
+     * ProviderRepository constructor.
+     * @param ApplicationContract $app
+     */
+    public function __construct(ApplicationContract $app)
+    {
+        $this->app = $app;
+    }
+
+    /**
+     * @param array $providers
+     */
+    public function load(array $providers)
+    {
+        foreach ($providers as $provider) {
+            $this->app->register($provider);
+        }
+    }
 }

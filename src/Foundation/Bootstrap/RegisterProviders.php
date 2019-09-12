@@ -9,7 +9,12 @@
 namespace Tanmo\Wq\Foundation\Bootstrap;
 
 
+use Illuminate\Contracts\Foundation\Application;
+
 class RegisterProviders
 {
-
+    public function bootstrap(Application $app)
+    {
+        $app->registerConfiguredProviders();
+    }
 }

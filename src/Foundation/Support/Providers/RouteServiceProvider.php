@@ -1,6 +1,6 @@
 <?php
 
-namespace Illuminate\Foundation\Support\Providers;
+namespace Tanmo\Wq\Foundation\Support\Providers;
 
 use Illuminate\Routing\Router;
 use Illuminate\Support\ServiceProvider;
@@ -91,9 +91,10 @@ class RouteServiceProvider extends ServiceProvider
     /**
      * Pass dynamic methods onto the router instance.
      *
-     * @param  string  $method
-     * @param  array  $parameters
+     * @param $method
+     * @param $parameters
      * @return mixed
+     * @throws \Illuminate\Contracts\Container\BindingResolutionException
      */
     public function __call($method, $parameters)
     {

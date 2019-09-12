@@ -1,6 +1,6 @@
 <?php
 
-namespace Illuminate\Foundation;
+namespace Tanmo\Wq\Foundation;
 
 use Closure;
 use Illuminate\Support\Str;

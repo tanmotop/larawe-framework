@@ -1,16 +1,16 @@
 <?php
 
-namespace Illuminate\Foundation\Bootstrap;
+namespace Tanmo\Wq\Foundation\Bootstrap;
 
 use Dotenv\Dotenv;
 use Dotenv\Environment\DotenvFactory;
 use Dotenv\Exception\InvalidFileException;
 use Dotenv\Environment\Adapter\PutenvAdapter;
-use Symfony\Component\Console\Input\ArgvInput;
+//use Symfony\Component\Console\Input\ArgvInput;
 use Dotenv\Environment\Adapter\EnvConstAdapter;
 use Illuminate\Contracts\Foundation\Application;
 use Dotenv\Environment\Adapter\ServerConstAdapter;
-use Symfony\Component\Console\Output\ConsoleOutput;
+//use Symfony\Component\Console\Output\ConsoleOutput;
 
 class LoadEnvironmentVariables
 {
@@ -43,13 +43,13 @@ class LoadEnvironmentVariables
      */
     protected function checkForSpecificEnvironmentFile($app)
     {
-        if ($app->runningInConsole() && ($input = new ArgvInput)->hasParameterOption('--env')) {
-            if ($this->setEnvironmentFilePath(
-                $app, $app->environmentFile().'.'.$input->getParameterOption('--env')
-            )) {
-                return;
-            }
-        }
+//        if ($app->runningInConsole() && ($input = new ArgvInput)->hasParameterOption('--env')) {
+//            if ($this->setEnvironmentFilePath(
+//                $app, $app->environmentFile().'.'.$input->getParameterOption('--env')
+//            )) {
+//                return;
+//            }
+//        }
 
         if (! env('APP_ENV')) {
             return;
@@ -101,11 +101,11 @@ class LoadEnvironmentVariables
      */
     protected function writeErrorAndDie(InvalidFileException $e)
     {
-        $output = (new ConsoleOutput)->getErrorOutput();
-
-        $output->writeln('The environment file is invalid!');
-        $output->writeln($e->getMessage());
-
-        die(1);
+//        $output = (new ConsoleOutput)->getErrorOutput();
+//
+//        $output->writeln('The environment file is invalid!');
+//        $output->writeln($e->getMessage());
+//
+//        die(1);
     }
 }
