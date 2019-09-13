@@ -10,8 +10,9 @@ namespace Tanmo\Wq\Routing;
 
 
 use Illuminate\Routing\Router;
-use Illuminate\Routing\RoutingServiceProvider as ServiceProvider;
+use Illuminate\Routing\Redirector;
 use Illuminate\Routing\UrlGenerator;
+use Illuminate\Routing\RoutingServiceProvider as ServiceProvider;
 
 class RoutingServiceProvider extends ServiceProvider
 {
@@ -19,6 +20,7 @@ class RoutingServiceProvider extends ServiceProvider
     {
         $this->registerRouter();
         $this->registerUrlGenerator();
+        $this->registerRedirector();
     }
 
     /**
@@ -33,6 +35,9 @@ class RoutingServiceProvider extends ServiceProvider
         });
     }
 
+    /**
+     * Register the URL generator service.
+     */
     protected function registerUrlGenerator()
     {
         $this->app->singleton('url', function ($app) {
@@ -65,5 +70,26 @@ class RoutingServiceProvider extends ServiceProvider
         return function ($app, $request) {
             $app['url']->setRequest($request);
         };
+    }
+
+    /**
+     * Register the Redirector service.
+     *
+     * @return void
+     */
+    protected function registerRedirector()
+    {
+        $this->app->singleton('redirect', function ($app) {
+            $redirector = new Redirector($app['url']);
+
+            // If the session is set on the application instance, we'll inject it into
+            // the redirector instance. This allows the redirect responses to allow
+            // for the quite convenient "with" methods that flash to the session.
+            if (isset($app['session.store'])) {
+                $redirector->setSession($app['session.store']);
+            }
+
+            return $redirector;
+        });
     }
 }
