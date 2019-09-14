@@ -122,6 +122,18 @@ class Kernel implements KernelContract
     }
 
     /**
+     * Add Bootstrapper
+     *
+     * @param $bootstrapper
+     */
+    protected function addBootstrapper($bootstrapper)
+    {
+        if (class_exists($bootstrapper)) {
+            $this->bootstrappers[] = $bootstrapper;
+        }
+    }
+
+    /**
      * Handle an incoming HTTP request.
      *
      * @param  \Illuminate\Http\Request $request
