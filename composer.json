@@ -8,7 +8,9 @@
         "illuminate/routing": "^5.8",
         "illuminate/pipeline": "^5.8",
         "illuminate/events": "^5.8",
-        "illuminate/config": "^5.8"
+        "illuminate/config": "^5.8",
+        "illuminate/view": "^5.8",
+        "vlucas/phpdotenv": "^3.6"
     },
     "license": "MIT",
     "authors": [
