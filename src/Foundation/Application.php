@@ -10,6 +10,7 @@ namespace Larawe\Foundation;
 
 
 use Closure;
+use Illuminate\Log\LogServiceProvider;
 use RuntimeException;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
@@ -169,6 +170,7 @@ class Application extends Container implements ApplicationContract, HttpKernelIn
     protected function registerBaseServiceProviders()
     {
         $this->register(new EventServiceProvider($this));
+        $this->register(new LogServiceProvider($this));
         $this->register(new RoutingServiceProvider($this));
     }
 
@@ -185,6 +187,7 @@ class Application extends Container implements ApplicationContract, HttpKernelIn
                      'config'               => [\Illuminate\Config\Repository::class, \Illuminate\Contracts\Config\Repository::class],
                      'events'               => [\Illuminate\Events\Dispatcher::class, \Illuminate\Contracts\Events\Dispatcher::class],
                      'files'                => [\Illuminate\Filesystem\Filesystem::class],
+                     'log'                  => [\Illuminate\Log\LogManager::class, \Psr\Log\LoggerInterface::class],
                      'redirect'             => [\Illuminate\Routing\Redirector::class],
                      'request'              => [\Illuminate\Http\Request::class, \Symfony\Component\HttpFoundation\Request::class],
                      'router'               => [\Illuminate\Routing\Router::class, \Illuminate\Contracts\Routing\Registrar::class, \Illuminate\Contracts\Routing\BindingRegistrar::class],

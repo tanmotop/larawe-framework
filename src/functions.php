@@ -20,7 +20,6 @@ if (! function_exists('app')) {
      * @param  string $abstract
      * @param  array $parameters
      * @return mixed|\Larawe\Foundation\Application
-     * @throws \Illuminate\Contracts\Container\BindingResolutionException
      */
     function app($abstract = null, array $parameters = [])
     {
@@ -55,7 +54,6 @@ if (! function_exists('config')) {
      * @param null $key
      * @param null $default
      * @return mixed|\Larawe\Foundation\Application
-     * @throws \Illuminate\Contracts\Container\BindingResolutionException
      */
     function config($key = null, $default = null)
     {
@@ -77,7 +75,6 @@ if (! function_exists('storage_path')) {
      *
      * @param string $path
      * @return string
-     * @throws \Illuminate\Contracts\Container\BindingResolutionException
      */
     function storage_path($path = '')
     {
@@ -197,6 +194,22 @@ if (! function_exists('response')) {
         }
 
         return $factory->make($content, $status, $headers);
+    }
+}
+
+if (! function_exists('__')) {
+    /**
+     * Translate the given message.
+     *
+     * @param  string  $key
+     * @param  array  $replace
+     * @param  string|null  $locale
+     * @return string|array|null
+     */
+    function __($key, $replace = [], $locale = null)
+    {
+//        return app('translator')->getFromJson($key, $replace, $locale);
+        return $key;
     }
 }
 

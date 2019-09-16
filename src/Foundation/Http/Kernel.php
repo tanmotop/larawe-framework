@@ -9,6 +9,8 @@
 namespace Larawe\Foundation\Http;
 
 
+use Exception;
+use Throwable;
 use Illuminate\Routing\Router;
 use Illuminate\Routing\Pipeline;
 use Illuminate\Contracts\Foundation\Application;
@@ -17,6 +19,9 @@ use Larawe\Foundation\Bootstrap\LoadConfiguration;
 use Larawe\Foundation\Bootstrap\LoadEnvironmentVariables;
 use Larawe\Foundation\Bootstrap\RegisterProviders;
 use Larawe\Foundation\Bootstrap\BootProviders;
+use Larawe\Foundation\Bootstrap\HandleExceptions;
+use Illuminate\Contracts\Debug\ExceptionHandler;
+use Symfony\Component\Debug\Exception\FatalThrowableError;
 
 class Kernel implements KernelContract
 {
@@ -42,8 +47,9 @@ class Kernel implements KernelContract
     protected $bootstrappers = [
         LoadEnvironmentVariables::class,
         LoadConfiguration::class,
+        HandleExceptions::class,
         RegisterProviders::class,
-        BootProviders::class,
+        BootProviders::class
     ];
 
     /**
@@ -145,8 +151,14 @@ class Kernel implements KernelContract
             $request->enableHttpMethodParameterOverride();
 
             $response = $this->sendRequestThroughRouter($request);
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
+            $this->reportException($e);
 
+            $response = $this->renderException($request, $e);
+        } catch (Throwable $e) {
+            $this->reportException($e = new FatalThrowableError($e));
+
+            $response = $this->renderException($request, $e);
         }
 
         return $response;
@@ -182,6 +194,29 @@ class Kernel implements KernelContract
 
             return $this->router->dispatch($request);
         };
+    }
+
+    /**
+     * Report the exception to the exception handler.
+     *
+     * @param  \Exception  $e
+     * @return void
+     */
+    protected function reportException(Exception $e)
+    {
+        $this->app[ExceptionHandler::class]->report($e);
+    }
+
+    /**
+     * Render the exception to a response.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \Exception  $e
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    protected function renderException($request, Exception $e)
+    {
+        return $this->app[ExceptionHandler::class]->render($request, $e);
     }
 
     /**
