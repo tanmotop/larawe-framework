@@ -6,7 +6,7 @@
  * Time: 10:24 PM
  */
 
-namespace Tanmo\Wq\Routing;
+namespace Larawe\Routing;
 
 use Illuminate\Routing\Redirector as IlluminateRedirector;
 use Illuminate\Support\Str;

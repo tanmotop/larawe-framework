@@ -6,7 +6,7 @@
  * Time: 4:09 PM
  */
 
-namespace Tanmo\Wq\Routing\Matching;
+namespace Larawe\Routing\Matching;
 
 
 use Illuminate\Http\Request;

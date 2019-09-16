@@ -6,10 +6,10 @@
  * Time: 10:39 PM
  */
 
-namespace Tanmo\Wq\Foundation\Bootstrap;
+namespace Larawe\Foundation\Bootstrap;
 
 use Illuminate\Contracts\Foundation\Application;
-use Tanmo\Wq\Routing\Redirector;
+use Larawe\Routing\Redirector;
 
 class WqUrlGenerator
 {

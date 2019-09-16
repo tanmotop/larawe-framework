@@ -6,7 +6,7 @@
  * Time: 5:27 PM
  */
 
-namespace Tanmo\Wq\Foundation;
+namespace Larawe\Foundation;
 
 use Illuminate\Contracts\Foundation\Application as ApplicationContract;
 

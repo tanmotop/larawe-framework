@@ -1,6 +1,6 @@
 <?php
 
-namespace Tanmo\Wq\Foundation\Support\Providers;
+namespace Larawe\Foundation\Support\Providers;
 
 use Illuminate\Routing\Router;
 use Illuminate\Support\ServiceProvider;

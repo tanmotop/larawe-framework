@@ -6,7 +6,7 @@
  * Time: 3:27 PM
  */
 
-namespace Tanmo\Wq\Routing;
+namespace Larawe\Routing;
 
 
 use Illuminate\Routing\Router;

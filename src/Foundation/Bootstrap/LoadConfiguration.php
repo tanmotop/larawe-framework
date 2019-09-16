@@ -6,7 +6,7 @@
  * Time: 4:08 PM
  */
 
-namespace Tanmo\Wq\Foundation\Bootstrap;
+namespace Larawe\Foundation\Bootstrap;
 
 
 use Exception;

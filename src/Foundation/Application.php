@@ -6,7 +6,7 @@
  * Time: 9:52 AM
  */
 
-namespace Tanmo\Wq\Foundation;
+namespace Larawe\Foundation;
 
 
 use Closure;
@@ -17,7 +17,7 @@ use Illuminate\Http\Request;
 use Illuminate\Container\Container;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Events\EventServiceProvider;
-use Tanmo\Wq\Routing\RoutingServiceProvider;
+use Larawe\Routing\RoutingServiceProvider;
 use Symfony\Component\HttpKernel\HttpKernelInterface;
 use Illuminate\Contracts\Http\Kernel as HttpKernelContract;
 use Symfony\Component\HttpFoundation\Request as SymfonyRequest;
@@ -180,7 +180,7 @@ class Application extends Container implements ApplicationContract, HttpKernelIn
     public function registerCoreContainerAliases()
     {
         foreach ([
-                     'app'                  => [\Tanmo\Wq\Foundation\Application::class, \Illuminate\Contracts\Container\Container::class, \Illuminate\Contracts\Foundation\Application::class,  \Psr\Container\ContainerInterface::class],
+                     'app'                  => [\Larawe\Foundation\Application::class, \Illuminate\Contracts\Container\Container::class, \Illuminate\Contracts\Foundation\Application::class,  \Psr\Container\ContainerInterface::class],
                      'blade.compiler'       => [\Illuminate\View\Compilers\BladeCompiler::class],
                      'config'               => [\Illuminate\Config\Repository::class, \Illuminate\Contracts\Config\Repository::class],
                      'events'               => [\Illuminate\Events\Dispatcher::class, \Illuminate\Contracts\Events\Dispatcher::class],

@@ -6,7 +6,7 @@
  * Time: 4:05 PM
  */
 
-namespace Tanmo\Wq\Foundation\Bootstrap;
+namespace Larawe\Foundation\Bootstrap;
 
 
 use Illuminate\Contracts\Foundation\Application;

@@ -1,6 +1,6 @@
 <?php
 
-namespace Tanmo\Wq\Foundation;
+namespace Larawe\Foundation;
 
 use Closure;
 use Illuminate\Support\Str;

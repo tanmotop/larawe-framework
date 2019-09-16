@@ -1,5 +1,5 @@
 {
-    "name": "tanmo/wq",
+    "name": "larawe/framework",
     "description": "A laravel style we-engine module framework",
     "type": "framework",
     "require": {
@@ -21,7 +21,7 @@
     ],
     "autoload": {
         "psr-4": {
-            "Tanmo\\Wq\\": "src/"
+            "Larawe\\": "src/"
         },
         "files": [
             "src/functions.php"

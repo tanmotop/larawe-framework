@@ -6,17 +6,17 @@
  * Time: 5:13 PM
  */
 
-namespace Tanmo\Wq\Foundation\Http;
+namespace Larawe\Foundation\Http;
 
 
 use Illuminate\Routing\Router;
 use Illuminate\Routing\Pipeline;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\Http\Kernel as KernelContract;
-use Tanmo\Wq\Foundation\Bootstrap\LoadConfiguration;
-use Tanmo\Wq\Foundation\Bootstrap\LoadEnvironmentVariables;
-use Tanmo\Wq\Foundation\Bootstrap\RegisterProviders;
-use Tanmo\Wq\Foundation\Bootstrap\BootProviders;
+use Larawe\Foundation\Bootstrap\LoadConfiguration;
+use Larawe\Foundation\Bootstrap\LoadEnvironmentVariables;
+use Larawe\Foundation\Bootstrap\RegisterProviders;
+use Larawe\Foundation\Bootstrap\BootProviders;
 
 class Kernel implements KernelContract
 {

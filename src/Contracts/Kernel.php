@@ -6,7 +6,7 @@
  * Time: 5:00 PM
  */
 
-namespace Tanmo\Wq\Contracts;
+namespace Larawe\Contracts;
 
 
 interface Kernel extends \Illuminate\Contracts\Http\Kernel

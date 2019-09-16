@@ -1,6 +1,6 @@
 <?php
 
-namespace Tanmo\Wq\Foundation\Bootstrap;
+namespace Larawe\Foundation\Bootstrap;
 
 use Dotenv\Dotenv;
 use Dotenv\Environment\DotenvFactory;

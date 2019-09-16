@@ -19,7 +19,7 @@ if (! function_exists('app')) {
      *
      * @param  string $abstract
      * @param  array $parameters
-     * @return mixed|\Tanmo\Wq\Foundation\Application
+     * @return mixed|\Larawe\Foundation\Application
      * @throws \Illuminate\Contracts\Container\BindingResolutionException
      */
     function app($abstract = null, array $parameters = [])
@@ -54,7 +54,7 @@ if (! function_exists('config')) {
      *
      * @param null $key
      * @param null $default
-     * @return mixed|\Tanmo\Wq\Foundation\Application
+     * @return mixed|\Larawe\Foundation\Application
      * @throws \Illuminate\Contracts\Container\BindingResolutionException
      */
     function config($key = null, $default = null)
