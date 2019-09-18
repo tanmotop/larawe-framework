@@ -208,23 +208,8 @@ if (! function_exists('__')) {
      */
     function __($key, $replace = [], $locale = null)
     {
+        // TODO:转换器未做
 //        return app('translator')->getFromJson($key, $replace, $locale);
         return $key;
-    }
-}
-
-if (! function_exists('pr')) {
-    function pr($val) {
-        echo '<pre>';
-        print_r($val);
-        echo '</pre>';
-    }
-}
-
-if (! function_exists('dump')) {
-    function dump($val) {
-        echo '<pre>';
-        var_dump($val);
-        echo '</pre>';
     }
 }

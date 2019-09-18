@@ -11,6 +11,7 @@
         "illuminate/config": "^5.8",
         "illuminate/view": "^5.8",
         "illuminate/log": "^5.8",
+        "symfony/var-dumper": "^4.2",
         "vlucas/phpdotenv": "^3.6"
     },
     "license": "MIT",

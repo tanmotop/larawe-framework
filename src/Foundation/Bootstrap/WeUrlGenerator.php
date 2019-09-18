@@ -10,6 +10,11 @@ namespace Larawe\Foundation\Bootstrap;
 
 use Illuminate\Contracts\Foundation\Application;
 use Larawe\Routing\Redirector;
+use Illuminate\Routing\Matching\MethodValidator;
+use Illuminate\Routing\Matching\SchemeValidator;
+use Larawe\Routing\Matching\UriValidator;
+use Illuminate\Routing\Matching\HostValidator;
+use Illuminate\Routing\Route;
 
 class WqUrlGenerator
 {
@@ -18,6 +23,11 @@ class WqUrlGenerator
      */
     public function bootstrap(Application $app)
     {
+        Route::$validators = [
+            new UriValidator, new MethodValidator,
+            new SchemeValidator, new HostValidator,
+        ];
+
         $this->registerFormatPathUsing($app);
 
         $this->rebindingRedirector($app);
