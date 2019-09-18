@@ -23,7 +23,9 @@ class Redirector extends IlluminateRedirector
      */
     public function to($path, $status = 302, $headers = [], $secure = null)
     {
-        $path = Str::replaceLast('?', '&', $path);
+        if (substr_count($path, '?') > 1) {
+            $path = Str::replaceLast('?', '&', $path);
+        }
         return parent::to($path, $status, $headers, $secure);
     }
 }
