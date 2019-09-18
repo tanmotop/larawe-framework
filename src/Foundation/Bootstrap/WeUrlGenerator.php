@@ -16,7 +16,7 @@ use Larawe\Routing\Matching\UriValidator;
 use Illuminate\Routing\Matching\HostValidator;
 use Illuminate\Routing\Route;
 
-class WqUrlGenerator
+class WeUrlGenerator
 {
     /**
      * @param Application $app
