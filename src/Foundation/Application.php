@@ -10,6 +10,7 @@ namespace Larawe\Foundation;
 
 
 use Closure;
+use Illuminate\Filesystem\Filesystem;
 use Illuminate\Log\LogServiceProvider;
 use RuntimeException;
 use Illuminate\Support\Arr;
@@ -165,6 +166,10 @@ class Application extends Container implements ApplicationContract, HttpKernelIn
         $this->instance('app', $this);
 
         $this->instance(Container::class, $this);
+
+        $this->instance(PackageManifest::class, new PackageManifest(
+            new Filesystem, $this->basePath(), $this->getCachedPackagesPath()
+        ));
     }
 
     protected function registerBaseServiceProviders()

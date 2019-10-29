@@ -10,6 +10,7 @@ namespace Larawe\Foundation\Http;
 
 
 use Exception;
+use Larawe\Foundation\Bootstrap\RegisterFacades;
 use Throwable;
 use Illuminate\Routing\Router;
 use Illuminate\Routing\Pipeline;
@@ -48,6 +49,7 @@ class Kernel implements KernelContract
         LoadEnvironmentVariables::class,
         LoadConfiguration::class,
         HandleExceptions::class,
+        RegisterFacades::class,
         RegisterProviders::class,
         BootProviders::class
     ];
