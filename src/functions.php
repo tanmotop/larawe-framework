@@ -6,6 +6,7 @@
  * Time: 9:43 AM
  */
 
+use Illuminate\Support\HtmlString;
 use Illuminate\Container\Container;
 use Illuminate\Routing\ResponseFactory;
 use Illuminate\Contracts\View\Factory as ViewFactory;
@@ -224,5 +225,18 @@ if (! function_exists('__')) {
         // TODO:转换器未做
 //        return app('translator')->getFromJson($key, $replace, $locale);
         return $key;
+    }
+}
+
+if (! function_exists('method_field')) {
+    /**
+     * Generate a form field to spoof the HTTP verb used by forms.
+     *
+     * @param  string  $method
+     * @return \Illuminate\Support\HtmlString
+     */
+    function method_field($method)
+    {
+        return new HtmlString('<input type="hidden" name="_method" value="'.$method.'">');
     }
 }
