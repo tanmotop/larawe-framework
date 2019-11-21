@@ -9,6 +9,7 @@
 namespace Larawe\Foundation\Bootstrap;
 
 use Illuminate\Contracts\Foundation\Application;
+use Larawe\Routing\UrlGenerator;
 use Larawe\Routing\Redirector;
 use Illuminate\Routing\Matching\MethodValidator;
 use Illuminate\Routing\Matching\SchemeValidator;
@@ -28,9 +29,32 @@ class WeUrlGenerator
             new SchemeValidator, new HostValidator,
         ];
 
+        $this->registerUrlGenerator($app);
+
         $this->registerFormatPathUsing($app);
 
         $this->rebindingRedirector($app);
+    }
+
+    public function registerUrlGenerator($app)
+    {
+        $app->singleton('url', function ($app) {
+            $routes = $app['router']->getRoutes();
+
+            $url = new UrlGenerator(
+                $routes, $app->rebinding(
+                    'request', function ($app, $request) {
+                            $app['url']->setRequest($request);
+                        }
+                )
+            );
+
+            $app->rebinding('routes', function ($app, $routes) {
+                $app['url']->setRoutes($routes);
+            });
+
+            return $url;
+        });
     }
 
     /**
