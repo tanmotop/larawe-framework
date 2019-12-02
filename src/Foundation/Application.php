@@ -12,6 +12,7 @@ namespace Larawe\Foundation;
 use Closure;
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Log\LogServiceProvider;
+use Illuminate\Support\Collection;
 use RuntimeException;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
@@ -194,6 +195,7 @@ class Application extends Container implements ApplicationContract, HttpKernelIn
                      'files'                => [\Illuminate\Filesystem\Filesystem::class],
                      'log'                  => [\Illuminate\Log\LogManager::class, \Psr\Log\LoggerInterface::class],
                      'redirect'             => [\Illuminate\Routing\Redirector::class],
+                     'redis'                => [\Illuminate\Redis\RedisManager::class, \Illuminate\Contracts\Redis\Factory::class],
                      'request'              => [\Illuminate\Http\Request::class, \Symfony\Component\HttpFoundation\Request::class],
                      'router'               => [\Illuminate\Routing\Router::class, \Illuminate\Contracts\Routing\Registrar::class, \Illuminate\Contracts\Routing\BindingRegistrar::class],
                      'url'                  => [\Larawe\Routing\UrlGenerator::class, \Illuminate\Routing\UrlGenerator::class, \Illuminate\Contracts\Routing\UrlGenerator::class],
@@ -452,7 +454,16 @@ class Application extends Container implements ApplicationContract, HttpKernelIn
      */
     public function registerConfiguredProviders()
     {
-        (new ProviderRepository($this))->load($this->config['app.providers']);
+//        (new ProviderRepository($this))->load($this->config['app.providers']);
+        $providers = Collection::make($this->config['app.providers'])
+            ->partition(function ($provider) {
+                return Str::startsWith($provider, 'Illuminate\\');
+            });
+
+        $providers->splice(1, 0, [$this->make(PackageManifest::class)->providers()]);
+
+        (new ProviderRepository($this, new Filesystem, $this->getCachedServicesPath()))
+            ->load($providers->collapse()->toArray());
     }
 
     /**
@@ -549,31 +560,6 @@ class Application extends Container implements ApplicationContract, HttpKernelIn
     public function getProvider($provider)
     {
         return array_values($this->getProviders($provider))[0] ?? null;
-    }
-
-    /**
-     * Register a deferred provider and service.
-     *
-     * @param  string $provider
-     * @param  string|null $service
-     * @return void
-     */
-    public function registerDeferredProvider($provider, $service = null)
-    {
-        // Once the provider that provides the deferred service has been registered we
-        // will remove it from our local list of the deferred services with related
-        // providers so that this container does not try to resolve it out again.
-        if ($service) {
-            unset($this->deferredServices[$service]);
-        }
-
-        $this->register($instance = new $provider($this));
-
-        if (! $this->isBooted()) {
-            $this->booting(function () use ($instance) {
-                $this->bootProvider($instance);
-            });
-        }
     }
 
     /**
@@ -851,6 +837,88 @@ class Application extends Container implements ApplicationContract, HttpKernelIn
         if (! isset($this->loadedProviders[$provider])) {
             $this->registerDeferredProvider($provider, $service);
         }
+    }
+
+
+
+    /**
+     * Register a deferred provider and service.
+     *
+     * @param  string $provider
+     * @param  string|null $service
+     * @return void
+     */
+    public function registerDeferredProvider($provider, $service = null)
+    {
+        // Once the provider that provides the deferred service has been registered we
+        // will remove it from our local list of the deferred services with related
+        // providers so that this container does not try to resolve it out again.
+        if ($service) {
+            unset($this->deferredServices[$service]);
+        }
+
+        $this->register($instance = new $provider($this));
+
+        if (! $this->isBooted()) {
+            $this->booting(function () use ($instance) {
+                $this->bootProvider($instance);
+            });
+        }
+    }
+
+    /**
+     * Resolve the given type from the container.
+     *
+     * (Overriding Container::make)
+     *
+     * @param  string  $abstract
+     * @param  array  $parameters
+     * @return mixed
+     */
+    public function make($abstract, array $parameters = [])
+    {
+        $abstract = $this->getAlias($abstract);
+
+        if ($this->isDeferredService($abstract) && ! isset($this->instances[$abstract])) {
+            $this->loadDeferredProvider($abstract);
+        }
+
+        return parent::make($abstract, $parameters);
+    }
+
+    /**
+     * Determine if the given abstract type has been bound.
+     *
+     * (Overriding Container::bound)
+     *
+     * @param  string  $abstract
+     * @return bool
+     */
+    public function bound($abstract)
+    {
+        return $this->isDeferredService($abstract) || parent::bound($abstract);
+    }
+
+    /**
+     * Set the application's deferred services.
+     *
+     * @param  array  $services
+     * @return void
+     */
+    public function setDeferredServices(array $services)
+    {
+        $this->deferredServices = $services;
+    }
+
+    /**
+     * Add an array of services to the application's deferred services.
+     *
+     * @param  array  $services
+     * @return void
+     */
+    public function addDeferredServices(array $services)
+    {
+        $this->deferredServices = array_merge($this->deferredServices, $services);
     }
 
     /**
