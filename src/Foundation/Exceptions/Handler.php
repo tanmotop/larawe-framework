@@ -3,6 +3,7 @@
 namespace Larawe\Foundation\Exceptions;
 
 use Exception;
+use Symfony\Component\Console\Application as ConsoleApplication;
 use Throwable;
 use Whoops\Run as Whoops;
 use Illuminate\Support\Arr;
@@ -472,6 +473,6 @@ class Handler implements ExceptionHandlerContract
      */
     public function renderForConsole($output, Exception $e)
     {
-        // TODO: Implement renderForConsole() method.
+        (new ConsoleApplication)->renderException($e, $output);
     }
 }

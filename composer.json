@@ -12,6 +12,9 @@
         "illuminate/view": "^5.8",
         "illuminate/log": "^5.8",
         "illuminate/redis": "~5.8",
+        "illuminate/console": "~5.8",
+        "illuminate/cache": "~5.8",
+        "dragonmantank/cron-expression": "^2.3",
         "symfony/var-dumper": "^4.2",
         "vlucas/phpdotenv": "^3.6"
     },

@@ -190,6 +190,8 @@ class Application extends Container implements ApplicationContract, HttpKernelIn
         foreach ([
                      'app'                  => [\Larawe\Foundation\Application::class, \Illuminate\Contracts\Container\Container::class, \Illuminate\Contracts\Foundation\Application::class,  \Psr\Container\ContainerInterface::class],
                      'blade.compiler'       => [\Illuminate\View\Compilers\BladeCompiler::class],
+                     'cache'                => [\Illuminate\Cache\CacheManager::class, \Illuminate\Contracts\Cache\Factory::class],
+                     'cache.store'          => [\Illuminate\Cache\Repository::class, \Illuminate\Contracts\Cache\Repository::class],
                      'config'               => [\Illuminate\Config\Repository::class, \Illuminate\Contracts\Config\Repository::class],
                      'events'               => [\Illuminate\Events\Dispatcher::class, \Illuminate\Contracts\Events\Dispatcher::class],
                      'files'                => [\Illuminate\Filesystem\Filesystem::class],
@@ -454,7 +456,6 @@ class Application extends Container implements ApplicationContract, HttpKernelIn
      */
     public function registerConfiguredProviders()
     {
-//        (new ProviderRepository($this))->load($this->config['app.providers']);
         $providers = Collection::make($this->config['app.providers'])
             ->partition(function ($provider) {
                 return Str::startsWith($provider, 'Illuminate\\');
