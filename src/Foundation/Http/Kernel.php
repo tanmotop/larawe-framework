@@ -55,6 +55,13 @@ class Kernel implements KernelContract
     ];
 
     /**
+     * The bootstrap classes for the application in subclass
+     *
+     * @var array
+     */
+    protected $customBootstrappers = [];
+
+    /**
      * The application's middleware stack.
      *
      * @var array
@@ -126,7 +133,7 @@ class Kernel implements KernelContract
      */
     protected function bootstrappers()
     {
-        return $this->bootstrappers;
+        return array_merge($this->bootstrappers, $this->customBootstrappers);
     }
 
     /**
