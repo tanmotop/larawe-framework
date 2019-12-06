@@ -3,10 +3,11 @@
 
 namespace Larawe\Foundation\Providers;
 
-
-use Illuminate\Console\Scheduling\ScheduleRunCommand;
-use Illuminate\Contracts\Support\DeferrableProvider;
 use Illuminate\Support\ServiceProvider;
+use Larawe\Foundation\Console\ConsoleMakeCommand;
+use Larawe\Foundation\Console\MiddlewareMakeCommand;
+use Illuminate\Contracts\Support\DeferrableProvider;
+use Illuminate\Console\Scheduling\ScheduleRunCommand;
 
 class ArtisanServiceProvider extends ServiceProvider implements DeferrableProvider
 {
@@ -24,7 +25,10 @@ class ArtisanServiceProvider extends ServiceProvider implements DeferrableProvid
      *
      * @var array
      */
-    protected $devCommands = [];
+    protected $devCommands = [
+        'ConsoleMake' => 'command.console.make',
+        'MiddlewareMake' => 'command.middleware.make',
+    ];
 
     /**
      * Register the service provider.
@@ -61,6 +65,30 @@ class ArtisanServiceProvider extends ServiceProvider implements DeferrableProvid
     protected function registerScheduleRunCommand()
     {
         $this->app->singleton(ScheduleRunCommand::class);
+    }
+
+    /**
+     * Register the command.
+     *
+     * @return void
+     */
+    protected function registerMiddlewareMakeCommand()
+    {
+        $this->app->singleton('command.middleware.make', function ($app) {
+            return new MiddlewareMakeCommand($app['files']);
+        });
+    }
+
+    /**
+     * Register the command.
+     *
+     * @return void
+     */
+    protected function registerConsoleMakeCommand()
+    {
+        $this->app->singleton('command.console.make', function ($app) {
+            return new ConsoleMakeCommand($app['files']);
+        });
     }
 
     /**
